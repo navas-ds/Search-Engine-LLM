@@ -9,36 +9,35 @@ from dotenv import load_dotenv
 ## Code
 ####
 
-##Arxiv and Wikipedia Tools
+## Arxiv and wikipedia Tools
+arxiv_wrapper=ArxivAPIWrapper(top_k_results=1, doc_content_chars_max=200)
+arxiv=ArxivQueryRun(api_wrapper=arxiv_wrapper)
 
-api_wraper_wiki=WikipediaAPIWrapper(top_k_results=1,doc_content_chars_max=250)
-wiki=WikipediaQueryRun(api_wrapper=api_wraper_wiki)
+api_wrapper=WikipediaAPIWrapper(top_k_results=1,doc_content_chars_max=200)
+wiki=WikipediaQueryRun(api_wrapper=api_wrapper)
+
+search=DuckDuckGoSearchRun(name="Search")
 
 
-api_wraper_arxiv=ArxivAPIWrapper(top_k_results=1,doc_content_chars_max=250)
-arxiv=ArxivQueryRun(api_wrapper=api_wraper_arxiv)
-
-search=DuckDuckGoSearchRun(name="search")
-
-st.title("Langchain - Chat with search")
+st.title("🔎 LangChain - Chat with search")
 """
-in this example,we are using 'StreamlitCallbackHandler' to display the thoughts and actions of an agent in an interactive streamlit app.
-Try more Langchain streamlit Agent exaples at [github.com/langchain-ai/streamlit-agent](https://github.com/langchain-ai/streamlit-agent)
+In this example, we're using `StreamlitCallbackHandler` to display the thoughts and actions of an agent in an interactive Streamlit app.
+Try more LangChain 🤝 Streamlit Agent examples at [github.com/langchain-ai/streamlit-agent](https://github.com/langchain-ai/streamlit-agent).
 """
 
-## side bar for settings
-st.sidebar.title("settings")
-api_key=st.sidebar.text_input("enter your GROQ api key:",type="password")
+## Sidebar for settings
+st.sidebar.title("Settings")
+api_key=st.sidebar.text_input("Enter your Groq API Key:",type="password")
 
 if "messages" not in st.session_state:
     st.session_state["messages"]=[
-        {"role":"assistant","content":"hi,i'm a chatbot who can search the web.how can i help you?"}
+        {"role":"assisstant","content":"Hi,I'm a chatbot who can search the web. How can I help you?"}
     ]
 
 for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+    st.chat_message(msg["role"]).write(msg['content'])
 
-if prompt:=st.chat_input(placeholder="what is machine learning"):
+if prompt:=st.chat_input(placeholder="What is machine learning?"):
     st.session_state.messages.append({"role":"user","content":prompt})
     st.chat_message("user").write(prompt)
 
